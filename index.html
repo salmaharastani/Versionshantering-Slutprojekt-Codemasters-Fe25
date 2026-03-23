@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codemasters Messageboard</title>
 </head>
 <body>
-    
+
+  <h1>Codemasters Messageboard</h1>
+
+  <form id="messageForm">
+    <input type="text" id="name" placeholder="Ditt namn">
+    <br><br>
+    <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
+    <br><br>
+    <button type="submit">Skicka</button>
+  </form>
+
+  <p id="statusMessage"></p>
+
+  <h2>Meddelanden</h2>
+  <div id="messagesContainer"></div>
+
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
