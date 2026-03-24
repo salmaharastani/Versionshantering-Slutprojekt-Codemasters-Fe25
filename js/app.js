@@ -1,12 +1,18 @@
-import { db } from "./firebase.js";
+import { db, firestore, saveToFirestore, getFromFirestore, listenFirestore } from "./firebase.js";
 import { ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { initUsernamePrompt, getUsername } from "./username.js";
+
 const form = document.getElementById("messageForm");
 const nameInput = document.getElementById("name");
 const messageInput = document.getElementById("message");
 const statusMessage = document.getElementById("statusMessage");
 const messagesContainer = document.getElementById("messagesContainer");
 const themeToggle = document.getElementById("themeToggle");
+
 console.log(themeToggle);
+
+
+
 function saveMessage(name, message) {
   const messagesRef = ref(db, "messages");
 
@@ -44,11 +50,44 @@ function loadMessages() {
   });
 }
 
-form.addEventListener("submit", function (event) {
+
+async function saveUserActivity(activity) {
+  try {
+    const username = getUsername();
+    if (username) {
+      await saveToFirestore("userActivities", {
+        username: username,
+        activity: activity,
+        timestamp: new Date().toISOString()
+      });
+      console.log("Aktivitet sparad i Firestore!");
+    }
+  } catch (error) {
+    console.error("Kunde inte spara aktivitet:", error);
+  }
+}
+
+
+async function loadUserActivities() {
+  try {
+    const username = getUsername();
+    if (username) {
+
+      console.log("Kan hämta användaraktivitet från Firestore");
+    }
+  } catch (error) {
+    console.error("Kunde inte hämta aktivitet:", error);
+  }
+}
+
+
+
+form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const name = nameInput.value.trim();
   const message = messageInput.value.trim();
+  const username = getUsername();
 
   if (name === "" || message === "") {
     statusMessage.textContent = "Du måste fylla i både namn och meddelande.";
@@ -56,7 +95,13 @@ form.addEventListener("submit", function (event) {
     return;
   }
 
+ 
   saveMessage(name, message);
+  
+
+  if (username) {
+    await saveUserActivity(`Skickade meddelande: ${message.substring(0, 50)}...`);
+  }
 
   statusMessage.textContent = "Meddelandet sparades!";
   statusMessage.style.color = "green";
@@ -64,7 +109,8 @@ form.addEventListener("submit", function (event) {
   form.reset();
 });
 
-loadMessages();
+
+
 function applySavedTheme() {
   const savedTheme = localStorage.getItem("theme");
 
@@ -83,4 +129,8 @@ themeToggle.addEventListener("click", function () {
   }
 });
 
+
+loadMessages();
 applySavedTheme();
+initUsernamePrompt();
+
