@@ -70,12 +70,93 @@ button:hover {
   margin-top: 12px;
 }
 
-#messagesContainer div {
+#messageCategory,
+#boardCategoryFilter,
+#boardTimeSort {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #222;
+}
+
+#messagesContainer > .message-card {
   background: #eef2ff;
   padding: 12px;
   margin-top: 12px;
   border-radius: 8px;
   border-left: 5px solid #4f46e5;
+}
+
+.message-card {
+  background: #eef2ff;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border-left: 5px solid #4f46e5;
+}
+
+.message-category-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #312e81;
+}
+
+#messagesContainer > .message-card.category-juridisk {
+  border-left-color: #6b7280;
+}
+
+.category-juridisk .message-category-badge {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+#messagesContainer > .message-card.category-vision {
+  border-left-color: #0891b2;
+}
+
+.category-vision .message-category-badge {
+  background: #cffafe;
+  color: #155e75;
+}
+
+#messagesContainer > .message-card.category-resultat {
+  border-left-color: #d97706;
+}
+
+.category-resultat .message-category-badge {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+#messagesContainer > .message-card.category-teamwork {
+  border-left-color: #7c3aed;
+}
+
+.category-teamwork .message-category-badge {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+#messagesContainer > .message-card.category-larande {
+  border-left-color: #16a34a;
+}
+
+.category-larande .message-category-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+#messagesContainer > .message-card.category-evenemang {
+  border-left-color: #ea580c;
+}
+
+.category-evenemang .message-category-badge {
+  background: #ffedd5;
+  color: #9a3412;
 }
 
 #themeToggle {
@@ -104,6 +185,14 @@ button:hover {
   border: 1px solid #475569;
 }
 
+.dark-mode #messageCategory,
+.dark-mode #boardCategoryFilter,
+.dark-mode #boardTimeSort {
+  background-color: #0f172a;
+  color: #fff;
+  border: 1px solid #475569;
+}
+
 .dark-mode input:focus,
 .dark-mode textarea:focus {
   border-color: #818cf8;
@@ -119,14 +208,221 @@ button:hover {
   background-color: #4f46e5;
 }
 
-.dark-mode #messagesContainer div {
+.dark-mode #messagesContainer > .message-card {
   background-color: #0f172a;
   color: white;
   border-left: 5px solid #818cf8;
 }
 
+.dark-mode .message-card {
+  background-color: #0f172a;
+  color: white;
+}
+
+.dark-mode .message-category-badge {
+  background: #312e81;
+  color: #e0e7ff;
+}
+
+.dark-mode #messagesContainer > .message-card.category-juridisk {
+  border-left-color: #9ca3af;
+}
+
+.dark-mode .category-juridisk .message-category-badge {
+  background: #374151;
+  color: #e5e7eb;
+}
+
+.dark-mode #messagesContainer > .message-card.category-vision {
+  border-left-color: #67e8f9;
+}
+
+.dark-mode .category-vision .message-category-badge {
+  background: #164e63;
+  color: #cffafe;
+}
+
+.dark-mode #messagesContainer > .message-card.category-resultat {
+  border-left-color: #fbbf24;
+}
+
+.dark-mode .category-resultat .message-category-badge {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.dark-mode #messagesContainer > .message-card.category-teamwork {
+  border-left-color: #c4b5fd;
+}
+
+.dark-mode .category-teamwork .message-category-badge {
+  background: #4c1d95;
+  color: #ddd6fe;
+}
+
+.dark-mode #messagesContainer > .message-card.category-larande {
+  border-left-color: #86efac;
+}
+
+.dark-mode .category-larande .message-category-badge {
+  background: #14532d;
+  color: #dcfce7;
+}
+
+.dark-mode #messagesContainer > .message-card.category-evenemang {
+  border-left-color: #fdba74;
+}
+
+.dark-mode .category-evenemang .message-category-badge {
+  background: #7c2d12;
+  color: #ffedd5;
+}
+/* Login/Register overlay */
+#username-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.username-prompt-box {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 380px;
+}
+
+.username-prompt-heading {
+  text-align: center;
+  color: #4f46e5;
+  margin-bottom: 16px;
+}
+
+.username-prompt-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #222;
+}
+
+.username-prompt-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.username-prompt-confirm-wrapper {
+  margin: 0;
+}
+
+.username-prompt-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.username-prompt-btn:hover {
+  background: #4338ca;
+}
+
+.username-prompt-error {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+  display: block;
+}
+
+.username-prompt-toggle {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #555;
+}
+
+.username-prompt-toggle-link {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  width: auto;
+  margin: 0;
+  font-weight: bold;
+}
+
+.username-prompt-toggle-link:hover {
+  text-decoration: underline;
+  background: none;
+}
+
+/* Dark mode för login */
+.dark-mode .username-prompt-box {
+  background: #1e293b;
+}
+
+.dark-mode .username-prompt-input {
+  background: #0f172a;
+  color: white;
+  border: 1px solid #475569;
+}
+
+.dark-mode .username-prompt-toggle {
+  color: #a5b4fc;
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* make translate fit navbar */
+#google_translate_element {
+  display: flex;
+  align-items: center;
+}
+
+/* style dropdown like nav button */
+.goog-te-gadget select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: transparent;
+  color: white;
+
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* remove Google junk text */
+.goog-te-gadget span,
+.goog-logo-link {
+  display: none !important;
+}
 
 
 
-/*Contribution */
 
+.goog-te-gadget span {
+  display: none !important;
+}

@@ -5,15 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codemasters Messageboard</title>
   <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="./js/username.js"></script>
 </head>
 <body>
-  <main>
+<header>
+  <nav>
+            <div class="link-container" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="About.html">About</a>
+                <a href="Contact.html">Contact</a>
+                    <a id="google_translate_element"> </a>
+
+            </div>
+   </nav>
+</header>
     <h1>Codemasters Messageboard</h1>
 
     <button id="themeToggle">Tema</button>
-
+    
+<main>
+<!--Här har ni kategorierna ni kan välja mellan på message form -->
     <form id="messageForm">
       <input type="text" id="name" placeholder="Ditt namn">
+      <br><br>
+      <label for="messageCategory">Kategori</label>
+      <select id="messageCategory">
+        <option value="juridisk">Juridisk</option>
+        <option value="vision">Vision</option>
+        <option value="resultat">Resultat</option>
+        <option value="teamwork" selected>Teamwork</option>
+        <option value="larande">Larande</option>
+        <option value="evenemang">Evenemang</option>
+      </select>
       <br><br>
       <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
       <br><br>
@@ -21,11 +44,49 @@
     </form>
 
     <p id="statusMessage"></p>
-
+<!--Här har ni kategorierna ni kan välja mellan för filtret -->
     <h2>Meddelanden</h2>
+    <label for="boardCategoryFilter">Filtrera kategori</label>
+    <select id="boardCategoryFilter">
+      <option value="all" selected>Alla kategorier</option>
+      <option value="juridisk">Juridisk</option>
+      <option value="vision">Vision</option>
+      <option value="resultat">Resultat</option>
+      <option value="teamwork">Teamwork</option>
+      <option value="larande">Larande</option>
+      <option value="evenemang">Evenemang</option>
+    </select>
+<!-- Sorteringen för tid fungerar åt båda hållen-->
+    <label for="boardTimeSort">Sortera tid</label>
+    <select id="boardTimeSort">
+      <option value="desc" selected>Nyast forst</option>
+      <option value="asc">Aldst forst</option>
+    </select>
     <div id="messagesContainer"></div>
   </main>
 
+   <footer>
+            <div class="socialbox">
+                <p>Socail Media</p>
+                <a href="https://www.facebook.com">
+                    <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
+
+                </a>
+                <a href="https://instagram.com">
+                    <img  class="socials-icon"  src="../img/instagram.png" alt="Instagram Icon">
+                </a>
+                <a href="https://github.com">
+                    <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
+
+                </a>
+            </div>
+            <p>Copyrights 2026, Codemasters</p>
+        </footer>
+    
+
   <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/translate.js"></script>
+    <script type="module" src="js/cooldown.js"></script>
+
 </body>
 </html>
