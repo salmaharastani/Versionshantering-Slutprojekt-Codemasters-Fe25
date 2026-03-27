@@ -1,5 +1,5 @@
 import { db, firestore, saveToFirestore, getFromFirestore, listenFirestore } from "./firebase.js";
-import { ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { initUsernamePrompt, getUsername } from "./username.js";
 
 const form = document.getElementById("messageForm");
@@ -36,14 +36,24 @@ function loadMessages() {
       return;
     }
 
-    Object.values(data).forEach((msg) => {
+   Object.entries(data).forEach(([key, msg]) => {
       const div = document.createElement("div");
 
-      div.innerHTML = `
-        <h3>${msg.name}</h3>
-        <p>${msg.message}</p>
-        <small>${new Date(msg.createdAt).toLocaleString("sv-SE")}</small>
-      `;
+  div.innerHTML = `
+  <h3>${msg.name}</h3>
+  <p>${msg.message}</p>
+  <small>${new Date(msg.createdAt).toLocaleString("sv-SE")}</small>
+  <button class="delete-btn">Ta bort</button>
+`;
+const deleteBtn = div.querySelector(".delete-btn");
+deleteBtn.addEventListener("click", () => {
+  const confirmed = confirm("Är du säker?");
+  if (!confirmed) return;
+
+  const messageRef = ref(db, "messages/" + key);
+  remove(messageRef);
+});
+
 
       messagesContainer.appendChild(div);
     });
