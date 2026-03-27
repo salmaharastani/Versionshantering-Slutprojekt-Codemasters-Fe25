@@ -1,58 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codemasters</title>
+    <title>Codemasters - About</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* --- CSS SEKTION --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --container-bg: #f4f4f4;
+            --accent-color: #007bff;
+        }
 
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f4f4f4;
+            --container-bg: #2d2d2d;
+            --accent-color: #3786d6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        nav .link-container a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        nav .link-container a:hover {
+            opacity: 0.7;
+        }
+
+        .about-container {
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1.page-title {
+            margin: 10px 0;
+        }
+
+        button#theme-toggle {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button#theme-toggle:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Google Translate placering */
+        #google_translate_element {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-
 <body>
-<header>
-    <div>
+
+    <header>
+        <div id="google_translate_element"></div>
+
         <nav>
             <div class="link-container" id="nav-links">
                 <a href="index.html">Home</a>
                 <a href="About.html">About</a>
                 <a href="Contact.html">Contact</a>
-
             </div>
         </nav>
-       
-   
-    </div>
+
         <h1 class="page-title">Codemasters Messageboard</h1>
-        <button id="theme-toggle">Tema</button>
-       
- </header>  
-        <main>  
-            <div class="about-container">
-                <div class="aout-info"></div>
-                <h2>Welcome to our Message Board</h2>
-                <p>We believe in the power of conversation and our platform is
-            designed to connect people foster discussions and create space where
-            opinions, ideas and knowledge can be shared freely.
-                </p>
-            </div>
-        </main>
-         <footer>
-            <div class="socialbox">
-                <p>Socail Media</p>
-                <a href="https://www.facebook.com">
-                    <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
+        <button id="theme-toggle">Byt Tema</button>
+    </header>
 
-                </a>
-                <a href="https://instagram.com">
-                    <img  class="socials-icon"  src="../img/instagram.png" alt="Instagram Icon">
-                </a>
-                <a href="https://github.com">
-                    <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
+    <main>  
+        <div class="about-container">
+            <h2>Welcome to our Message Board</h2>
+            <p>
+                We believe in the power of conversation and our platform is
+                designed to connect people, foster discussions and create a space where
+                opinions, ideas and knowledge can be shared freely.
+            </p>
+            <p>
+                Whether you are here to learn something new or share your expertise, 
+                you are a vital part of the Codemasters community.
+            </p>
+        </div>
+    </main>
 
-                </a>
-            </div>
-            <p>Copyrights 2026, Codemasters</p>
-        </footer>
-    
-    
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Kolla sparat tema i localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+        }
+
+        // Växla tema vid klick
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    </script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>

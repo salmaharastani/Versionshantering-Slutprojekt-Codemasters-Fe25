@@ -5,57 +5,230 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codemasters Messageboard</title>
   <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* NAVBAR STYLING */
+    header.main-header {
+      background-color: #4f46e5;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 0 0 12px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .link-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .link-container a {
+      color: #ffffff;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .link-container a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* GOOGLE TRANSLATE CLEANUP */
+    .goog-te-gadget-simple {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      padding: 6px 10px !important;
+      border-radius: 8px !important;
+    }
+    .goog-te-gadget-simple span, .goog-te-gadget-simple a {
+      color: white !important;
+    }
+    .goog-te-gadget img { display: none !important; }
+
+    /* POP-UP (DIALOG) */
+    dialog {
+      padding: 30px;
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+    }
+    #closeModal {
+      margin-top: 15px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+
   <script type="module" src="./js/username.js"></script>
+  <script src="./js/emoji.js" defer></script>
 </head>
 <body>
-<header>
+
+<header class="main-header">
   <nav>
-            <div class="link-container" id="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About.html">About</a>
-                <a href="Contact.html">Contact</a>
-
-            </div>
-   </nav>
+    <div class="link-container" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <div id="google_translate_element"></div>
+    </div>
+  </nav>
+  <h1 style="color: white; margin: 0;">Codemasters Messageboard</h1>
+  <button id="themeToggle">Växla Tema</button>
 </header>
-    <h1>Codemasters Messageboard</h1>
-
-    <button id="themeToggle">Tema</button>
     
 <main>
-    <form id="messageForm">
-      <input type="text" id="name" placeholder="Ditt namn">
-      <br><br>
-      <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
-      <br><br>
-      <button type="submit">Skicka</button>
-    </form>
+  <form id="messageForm">
+    <input type="text" id="name" placeholder="Ditt namn">
+    <br><br>
 
-    <p id="statusMessage"></p>
+    <label for="messageCategory">Kategori</label>
+    <select id="messageCategory">
+      <option value="juridisk">Juridisk</option>
+      <option value="vision">Vision</option>
+      <option value="resultat">Resultat</option>
+      <option value="teamwork" selected>Teamwork</option>
+      <option value="larande">Lärande</option>
+      <option value="evenemang">Evenemang</option>
+    </select>
 
-    <h2>Meddelanden</h2>
-    <div id="messagesContainer"></div>
-  </main>
+    <br><br>
 
-   <footer>
-            <div class="socialbox">
-                <p>Socail Media</p>
-                <a href="https://www.facebook.com">
-                    <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
+    <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
+    <select id="emojis"></select>
 
-                </a>
-                <a href="https://instagram.com">
-                    <img  class="socials-icon"  src="../img/instagram.png" alt="Instagram Icon">
-                </a>
-                <a href="https://github.com">
-                    <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
+    <br><br>
 
-                </a>
-            </div>
-            <p>Copyrights 2026, Codemasters</p>
-        </footer>
-    
+    <button type="submit" id="starsBtn">Skicka Meddelande</button>
+  </form>
 
-  <script type="module" src="js/app.js"></script>
+  <p id="statusMessage"></p>
+
+  <h2>Meddelanden</h2>
+
+  <label for="boardCategoryFilter">Filtrera kategori</label>
+  <select id="boardCategoryFilter">
+    <option value="all" selected>Alla kategorier</option>
+    <option value="juridisk">Juridisk</option>
+    <option value="vision">Vision</option>
+    <option value="resultat">Resultat</option>
+    <option value="teamwork">Teamwork</option>
+    <option value="larande">Lärande</option>
+    <option value="evenemang">Evenemang</option>
+  </select>
+
+  <label for="boardTimeSort">Sortera tid</label>
+  <select id="boardTimeSort">
+    <option value="desc" selected>Nyast först</option>
+    <option value="asc">Äldst först</option>
+  </select>
+
+  <div id="messagesContainer"></div>
+</main>
+
+<dialog id="messageModal">
+  <h2 style="color: #4f46e5;">Skickat! 🎉</h2>
+  <p>Ditt meddelande har lagts till på tavlan.</p>
+  <button id="closeModal">Stäng</button>
+</dialog>
+
+<audio id="popSound" src="pop.mp3" preload="auto"></audio>
+
+<footer>
+  <div class="socialbox">
+    <p>Social Media</p>
+    <a href="https://www.facebook.com"><img class="socials-icon" src="../img/facebook.png" alt="FB"></a>
+    <a href="https://instagram.com"><img class="socials-icon" src="../img/instagram.png" alt="IG"></a>
+    <a href="https://github.com"><img class="socials-icon" src="../img/github.png" alt="GH"></a>
+  </div>
+  <p>Copyrights 2026, Codemasters</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+<script src="js/Daniel.js"></script>
+<script type="module" src="js/translate.js"></script>
+<script type="module" src="js/cooldown.js"></script>
+
+<script>
+// --- KONFETTI LOGIK ---
+function startConfetti() {
+  for (let i = 0; i < 100; i++) {
+    let confetti = document.createElement("div");
+    confetti.style.position = "fixed";
+    confetti.style.width = "8px";
+    confetti.style.height = "8px";
+    confetti.style.backgroundColor = ["#ff4d4d", "#4da6ff", "#66ff66", "#ffff66", "#cc66ff"][Math.floor(Math.random() * 5)];
+    confetti.style.top = "-10px";
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.borderRadius = "50%";
+    confetti.style.zIndex = "1000";
+
+    document.body.appendChild(confetti);
+
+    let fall = confetti.animate([
+      { transform: "translateY(0px) rotate(0deg)", opacity: 1 },
+      { transform: `translateY(${window.innerHeight}px) rotate(720deg)`, opacity: 0 }
+    ], {
+      duration: 2000 + Math.random() * 2000,
+      easing: "ease-out"
+    });
+
+    fall.onfinish = () => confetti.remove();
+  }
+}
+
+// --- FORMULÄR-HÄNDELSER (Ljud + Pop-up + Konfetti) ---
+const messageForm = document.getElementById("messageForm");
+const popSound = document.getElementById("popSound");
+const messageModal = document.getElementById("messageModal");
+const closeModal = document.getElementById("closeModal");
+
+messageForm.addEventListener("submit", function(e) {
+  // Vi kör inte e.preventDefault() här om din app.js sköter sparandet, 
+  // men om du vill se pop-upen ordentligt innan sidan ändras:
+  
+  // 1. Spela ljud
+  popSound.currentTime = 0;
+  popSound.play().catch(err => console.log("Ljud kunde inte spelas: ", err));
+
+  // 2. Visa modal
+  messageModal.showModal();
+
+  // 3. Starta konfetti
+  startConfetti();
+});
+
+closeModal.addEventListener("click", () => {
+  messageModal.close();
+});
+</script>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'sv'}, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
