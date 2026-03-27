@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codemasters Messageboard</title>
   <link rel="stylesheet" href="css/style.css">
-  <script type="module" src="./js/username.js"></script>
-  <script src="./js/emoji.js" defer></script>
-</head>
-<body>
-<header>
- <header style="background-color: #4f46e5; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 0 0 12px 12px;">
+  
   <style>
-    /* Styling för själva nav-containern */
+    /* NAVBAR STYLING */
+    header.main-header {
+      background-color: #4f46e5;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 0 0 12px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
     .link-container {
       display: flex;
       align-items: center;
@@ -21,7 +27,6 @@
       flex-wrap: wrap;
     }
 
-    /* Styling för länkarna */
     .link-container a {
       color: #ffffff;
       text-decoration: none;
@@ -38,33 +43,48 @@
       transform: translateY(-2px);
     }
 
-    /* Fix för Google Translate så den matchar länkarna */
-    #google_translate_element {
-      display: flex;
-      align-items: center;
-    }
-
+    /* GOOGLE TRANSLATE CLEANUP */
     .goog-te-gadget-simple {
       background-color: rgba(255, 255, 255, 0.1) !important;
       border: 1px solid rgba(255, 255, 255, 0.3) !important;
       padding: 6px 10px !important;
       border-radius: 8px !important;
-      cursor: pointer;
     }
-
-    .goog-te-gadget-simple span, 
-    .goog-te-gadget-simple a {
+    .goog-te-gadget-simple span, .goog-te-gadget-simple a {
       color: white !important;
-      font-size: 14px !important;
-      text-decoration: none !important;
     }
+    .goog-te-gadget img { display: none !important; }
 
-    /* Döljer Google-loggan för en renare look */
-    .goog-te-gadget img {
-      display: none !important;
+    /* POP-UP (DIALOG) */
+    dialog {
+      padding: 30px;
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+    }
+    #closeModal {
+      margin-top: 15px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 
+  <script type="module" src="./js/username.js"></script>
+  <script src="./js/emoji.js" defer></script>
+</head>
+<body>
+
+<header class="main-header">
   <nav>
     <div class="link-container" id="nav-links">
       <a href="index.html">Home</a>
@@ -73,78 +93,73 @@
       <div id="google_translate_element"></div>
     </div>
   </nav>
+  <h1 style="color: white; margin: 0;">Codemasters Messageboard</h1>
+  <button id="themeToggle">Växla Tema</button>
 </header>
-
-<h1>Codemasters Messageboard</h1>
-
-<button id="themeToggle">Tema</button>
     
 <main>
-<form id="messageForm">
-  <input type="text" id="name" placeholder="Ditt namn">
-  <br><br>
+  <form id="messageForm">
+    <input type="text" id="name" placeholder="Ditt namn">
+    <br><br>
 
-  <label for="messageCategory">Kategori</label>
-  <select id="messageCategory">
+    <label for="messageCategory">Kategori</label>
+    <select id="messageCategory">
+      <option value="juridisk">Juridisk</option>
+      <option value="vision">Vision</option>
+      <option value="resultat">Resultat</option>
+      <option value="teamwork" selected>Teamwork</option>
+      <option value="larande">Lärande</option>
+      <option value="evenemang">Evenemang</option>
+    </select>
+
+    <br><br>
+
+    <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
+    <select id="emojis"></select>
+
+    <br><br>
+
+    <button type="submit" id="starsBtn">Skicka Meddelande</button>
+  </form>
+
+  <p id="statusMessage"></p>
+
+  <h2>Meddelanden</h2>
+
+  <label for="boardCategoryFilter">Filtrera kategori</label>
+  <select id="boardCategoryFilter">
+    <option value="all" selected>Alla kategorier</option>
     <option value="juridisk">Juridisk</option>
     <option value="vision">Vision</option>
     <option value="resultat">Resultat</option>
-    <option value="teamwork" selected>Teamwork</option>
-    <option value="larande">Larande</option>
+    <option value="teamwork">Teamwork</option>
+    <option value="larande">Lärande</option>
     <option value="evenemang">Evenemang</option>
   </select>
 
-  <br><br>
+  <label for="boardTimeSort">Sortera tid</label>
+  <select id="boardTimeSort">
+    <option value="desc" selected>Nyast först</option>
+    <option value="asc">Äldst först</option>
+  </select>
 
-  <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
-  <select id="emojis"></select>
-
-  <br><br>
-
-  <button type="submit" id="starsBtn">Skicka</button>
-</form>
+  <div id="messagesContainer"></div>
+</main>
 
 <dialog id="messageModal">
-  <p>Ditt meddelande har skickats!</p>
+  <h2 style="color: #4f46e5;">Skickat! 🎉</h2>
+  <p>Ditt meddelande har lagts till på tavlan.</p>
   <button id="closeModal">Stäng</button>
 </dialog>
 
-<p id="statusMessage"></p>
-
-<h2>Meddelanden</h2>
-
-<label for="boardCategoryFilter">Filtrera kategori</label>
-<select id="boardCategoryFilter">
-  <option value="all" selected>Alla kategorier</option>
-  <option value="juridisk">Juridisk</option>
-  <option value="vision">Vision</option>
-  <option value="resultat">Resultat</option>
-  <option value="teamwork">Teamwork</option>
-  <option value="larande">Larande</option>
-  <option value="evenemang">Evenemang</option>
-</select>
-
-<label for="boardTimeSort">Sortera tid</label>
-<select id="boardTimeSort">
-  <option value="desc" selected>Nyast forst</option>
-  <option value="asc">Aldst forst</option>
-</select>
-
-<div id="messagesContainer"></div>
-</main>
+<audio id="popSound" src="pop.mp3" preload="auto"></audio>
 
 <footer>
   <div class="socialbox">
-    <p>Socail Media</p>
-    <a href="https://www.facebook.com">
-      <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
-    </a>
-    <a href="https://instagram.com">
-      <img class="socials-icon" src="../img/instagram.png" alt="Instagram Icon">
-    </a>
-    <a href="https://github.com">
-      <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
-    </a>
+    <p>Social Media</p>
+    <a href="https://www.facebook.com"><img class="socials-icon" src="../img/facebook.png" alt="FB"></a>
+    <a href="https://instagram.com"><img class="socials-icon" src="../img/instagram.png" alt="IG"></a>
+    <a href="https://github.com"><img class="socials-icon" src="../img/github.png" alt="GH"></a>
   </div>
   <p>Copyrights 2026, Codemasters</p>
 </footer>
@@ -154,44 +169,66 @@
 <script type="module" src="js/translate.js"></script>
 <script type="module" src="js/cooldown.js"></script>
 
-<!-- 🎉 KONFETTI TILLAGT HÄR -->
 <script>
+// --- KONFETTI LOGIK ---
 function startConfetti() {
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 100; i++) {
     let confetti = document.createElement("div");
-
     confetti.style.position = "fixed";
     confetti.style.width = "8px";
     confetti.style.height = "8px";
-    confetti.style.backgroundColor = randomColor();
+    confetti.style.backgroundColor = ["#ff4d4d", "#4da6ff", "#66ff66", "#ffff66", "#cc66ff"][Math.floor(Math.random() * 5)];
     confetti.style.top = "-10px";
     confetti.style.left = Math.random() * window.innerWidth + "px";
-    confetti.style.opacity = Math.random();
     confetti.style.borderRadius = "50%";
+    confetti.style.zIndex = "1000";
 
     document.body.appendChild(confetti);
 
     let fall = confetti.animate([
-      { transform: "translateY(0px)" },
-      { transform: "translateY(" + window.innerHeight + "px)" }
+      { transform: "translateY(0px) rotate(0deg)", opacity: 1 },
+      { transform: `translateY(${window.innerHeight}px) rotate(720deg)`, opacity: 0 }
     ], {
-      duration: 2000 + Math.random() * 3000,
-      easing: "linear"
+      duration: 2000 + Math.random() * 2000,
+      easing: "ease-out"
     });
 
     fall.onfinish = () => confetti.remove();
   }
 }
 
-function randomColor() {
-  const colors = ["#ff4d4d", "#4da6ff", "#66ff66", "#ffff66", "#cc66ff", "#ff9933"];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+// --- FORMULÄR-HÄNDELSER (Ljud + Pop-up + Konfetti) ---
+const messageForm = document.getElementById("messageForm");
+const popSound = document.getElementById("popSound");
+const messageModal = document.getElementById("messageModal");
+const closeModal = document.getElementById("closeModal");
 
-document.getElementById("messageForm").addEventListener("submit", function() {
+messageForm.addEventListener("submit", function(e) {
+  // Vi kör inte e.preventDefault() här om din app.js sköter sparandet, 
+  // men om du vill se pop-upen ordentligt innan sidan ändras:
+  
+  // 1. Spela ljud
+  popSound.currentTime = 0;
+  popSound.play().catch(err => console.log("Ljud kunde inte spelas: ", err));
+
+  // 2. Visa modal
+  messageModal.showModal();
+
+  // 3. Starta konfetti
   startConfetti();
 });
+
+closeModal.addEventListener("click", () => {
+  messageModal.close();
+});
 </script>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'sv'}, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
