@@ -1,5 +1,5 @@
 import { db, firestore, saveToFirestore, getFromFirestore, listenFirestore } from "./firebase.js";
-import { ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { initUsernamePrompt, getUsername } from "./username.js";
 import { likeMessage } from "./likeMessages.js";
 import { deleteMessage } from "./deleteMessages.js";
