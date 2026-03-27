@@ -6,94 +6,137 @@
   <title>Codemasters Messageboard</title>
   <link rel="stylesheet" href="css/style.css">
   <script type="module" src="./js/username.js"></script>
-   <script src="./js/emoji.js" defer></script>
+  <script src="./js/emoji.js" defer></script>
 </head>
 <body>
 <header>
   <nav>
-            <div class="link-container" id="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About.html">About</a>
-                <a href="Contact.html">Contact</a>
-                    <a id="google_translate_element"> </a>
-
-            </div>
-   </nav>
+    <div class="link-container" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <a id="google_translate_element"> </a>
+    </div>
+  </nav>
 </header>
-    <h1>Codemasters Messageboard</h1>
 
-    <button id="themeToggle">Tema</button>
+<h1>Codemasters Messageboard</h1>
+
+<button id="themeToggle">Tema</button>
     
 <main>
-<!--Här har ni kategorierna ni kan välja mellan på message form -->
-    <form id="messageForm">
-      <input type="text" id="name" placeholder="Ditt namn">
-      <br><br>
-      <label for="messageCategory">Kategori</label>
-      <select id="messageCategory">
-        <option value="juridisk">Juridisk</option>
-        <option value="vision">Vision</option>
-        <option value="resultat">Resultat</option>
-        <option value="teamwork" selected>Teamwork</option>
-        <option value="larande">Larande</option>
-        <option value="evenemang">Evenemang</option>
-      </select>
-      <br><br>
-      <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
-      <select id="emojis"></select>
-      <br><br>
-      <button type="submit" id="starsBtn">Skicka</button>
-    </form>
+<form id="messageForm">
+  <input type="text" id="name" placeholder="Ditt namn">
+  <br><br>
+
+  <label for="messageCategory">Kategori</label>
+  <select id="messageCategory">
+    <option value="juridisk">Juridisk</option>
+    <option value="vision">Vision</option>
+    <option value="resultat">Resultat</option>
+    <option value="teamwork" selected>Teamwork</option>
+    <option value="larande">Larande</option>
+    <option value="evenemang">Evenemang</option>
+  </select>
+
+  <br><br>
+
+  <textarea id="message" placeholder="Skriv ditt meddelande"></textarea>
+  <select id="emojis"></select>
+
+  <br><br>
+
+  <button type="submit" id="starsBtn">Skicka</button>
+</form>
+
 <dialog id="messageModal">
   <p>Ditt meddelande har skickats!</p>
   <button id="closeModal">Stäng</button>
 </dialog>
-    <p id="statusMessage"></p>
-<!--Här har ni kategorierna ni kan välja mellan för filtret -->
-    <h2>Meddelanden</h2>
-    <label for="boardCategoryFilter">Filtrera kategori</label>
-    <select id="boardCategoryFilter">
-      <option value="all" selected>Alla kategorier</option>
-      <option value="juridisk">Juridisk</option>
-      <option value="vision">Vision</option>
-      <option value="resultat">Resultat</option>
-      <option value="teamwork">Teamwork</option>
-      <option value="larande">Larande</option>
-      <option value="evenemang">Evenemang</option>
-    </select>
-<!-- Sorteringen för tid fungerar åt båda hållen-->
-    <label for="boardTimeSort">Sortera tid</label>
-    <select id="boardTimeSort">
-      <option value="desc" selected>Nyast forst</option>
-      <option value="asc">Aldst forst</option>
-    </select>
-    <div id="messagesContainer"></div>
-  </main>
 
-   <footer>
-            <div class="socialbox">
-                <p>Socail Media</p>
-                <a href="https://www.facebook.com">
-                    <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
+<p id="statusMessage"></p>
 
-                </a>
-                <a href="https://instagram.com">
-                    <img  class="socials-icon"  src="../img/instagram.png" alt="Instagram Icon">
-                </a>
-                <a href="https://github.com">
-                    <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
+<h2>Meddelanden</h2>
 
-                </a>
-            </div>
-            <p>Copyrights 2026, Codemasters</p>
-        </footer>
-    
+<label for="boardCategoryFilter">Filtrera kategori</label>
+<select id="boardCategoryFilter">
+  <option value="all" selected>Alla kategorier</option>
+  <option value="juridisk">Juridisk</option>
+  <option value="vision">Vision</option>
+  <option value="resultat">Resultat</option>
+  <option value="teamwork">Teamwork</option>
+  <option value="larande">Larande</option>
+  <option value="evenemang">Evenemang</option>
+</select>
 
-  <script type="module" src="js/app.js"></script>
-   <script src="js/Daniel.js"></script>
-  <script type="module" src="js/translate.js"></script>
-    <script type="module" src="js/cooldown.js"></script>
-   
+<label for="boardTimeSort">Sortera tid</label>
+<select id="boardTimeSort">
+  <option value="desc" selected>Nyast forst</option>
+  <option value="asc">Aldst forst</option>
+</select>
+
+<div id="messagesContainer"></div>
+</main>
+
+<footer>
+  <div class="socialbox">
+    <p>Socail Media</p>
+    <a href="https://www.facebook.com">
+      <img class="socials-icon" src="../img/facebook.png" alt="Facebook Icon">
+    </a>
+    <a href="https://instagram.com">
+      <img class="socials-icon" src="../img/instagram.png" alt="Instagram Icon">
+    </a>
+    <a href="https://github.com">
+      <img class="socials-icon" src="../img/github.png" alt="Github Icon ">
+    </a>
+  </div>
+  <p>Copyrights 2026, Codemasters</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+<script src="js/Daniel.js"></script>
+<script type="module" src="js/translate.js"></script>
+<script type="module" src="js/cooldown.js"></script>
+
+<!-- 🎉 KONFETTI TILLAGT HÄR -->
+<script>
+function startConfetti() {
+  for (let i = 0; i < 120; i++) {
+    let confetti = document.createElement("div");
+
+    confetti.style.position = "fixed";
+    confetti.style.width = "8px";
+    confetti.style.height = "8px";
+    confetti.style.backgroundColor = randomColor();
+    confetti.style.top = "-10px";
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.opacity = Math.random();
+    confetti.style.borderRadius = "50%";
+
+    document.body.appendChild(confetti);
+
+    let fall = confetti.animate([
+      { transform: "translateY(0px)" },
+      { transform: "translateY(" + window.innerHeight + "px)" }
+    ], {
+      duration: 2000 + Math.random() * 3000,
+      easing: "linear"
+    });
+
+    fall.onfinish = () => confetti.remove();
+  }
+}
+
+function randomColor() {
+  const colors = ["#ff4d4d", "#4da6ff", "#66ff66", "#ffff66", "#cc66ff", "#ff9933"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+document.getElementById("messageForm").addEventListener("submit", function() {
+  startConfetti();
+});
+</script>
 
 </body>
 </html>
